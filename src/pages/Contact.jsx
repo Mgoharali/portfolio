@@ -2,9 +2,9 @@
 import { useState, useCallback, memo } from 'react'
 import { Send, Mail, MapPin, Github, Linkedin } from 'lucide-react'
 import toast from 'react-hot-toast'
-import PageLayout from '../components/layout/PageLayout'
-import { addMessage } from '../firebase/firestore'
-import { sanitizeForm, validateContactForm, checkRateLimit } from '../utils/sanitize'
+import PageLayout from '../components/layout/PageLayout.jsx'
+import { addMessage } from '../firebase/firestore.js'
+import { sanitizeForm, validateContactForm, checkRateLimit } from '../utils/sanitize.js'
 
 // Memoized — pure display, never re-renders
 const ContactInfo = memo(function ContactInfo() {

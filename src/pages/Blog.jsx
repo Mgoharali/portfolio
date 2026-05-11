@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock } from "lucide-react";
 import { format } from "date-fns";
-import PageLayout from "../components/layout/PageLayout";
-import { getPosts } from "../firebase/firestore";
+import PageLayout from "../components/layout/PageLayout.jsx";
+import { getPosts } from "../firebase/firestore.js";
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);

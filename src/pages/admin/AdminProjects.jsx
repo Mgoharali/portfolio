@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, X, Save } from "lucide-react";
 import toast from "react-hot-toast";
-import AdminLayout from "../../components/layout/AdminLayout";
-import { getProjects, addProject, updateProject, deleteProject } from "../../firebase/firestore";
+import AdminLayout from "../../components/layout/AdminLayout.jsx";
+import { getProjects, addProject, updateProject, deleteProject } from "../../firebase/firestore.js";
 
 const empty = { title: "", description: "", emoji: "⚡", tags: "", github: "", live: "" };
 

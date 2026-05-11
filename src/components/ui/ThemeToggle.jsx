@@ -1,5 +1,5 @@
 // src/components/ui/ThemeToggle.jsx
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext.jsx";
 import { Sun, Moon } from "lucide-react";
 
 /**

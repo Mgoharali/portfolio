@@ -7,10 +7,10 @@ import {
   Github as GithubIcon, Code2, Layers, Smartphone, Palette,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import PageLayout from "../components/layout/PageLayout";
-import { getProjects, getSkills, addMessage } from "../firebase/firestore";
-import { sanitizeForm, validateContactForm, checkRateLimit } from "../utils/sanitize";
-import { useReveal } from "../hooks/useScrollReveal";
+import PageLayout from "../components/layout/PageLayout.jsx";
+import { getProjects, getSkills, addMessage } from "../firebase/firestore.js";
+import { sanitizeForm, validateContactForm, checkRateLimit } from "../utils/sanitize.js";
+import { useReveal } from "../hooks/useScrollReveal.js";
 
 // ─── YOUR INFO ────────────────────────────────────────────────
 const PROFILE = {

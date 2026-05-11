@@ -1,12 +1,12 @@
 // src/components/layout/AdminLayout.jsx
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/Authcontext";
+import { useAuth } from "../../context/AuthContext.jsx";
 import {
   LayoutDashboard, FolderKanban, FileText,
   Cpu, MessageSquare, LogOut, ExternalLink, Menu, X
 } from "lucide-react";
-import ThemeToggle from "../ui/ThemeToggle";
+import ThemeToggle from "../ui/ThemeToggle.jsx";
 import toast from "react-hot-toast";
 
 const NAV_ITEMS = [

@@ -5,8 +5,8 @@ import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import PageLayout from "../components/layout/PageLayout";
-import { getPost } from "../firebase/firestore";
+import PageLayout from "../components/layout/PageLayout.jsx";
+import { getPost } from "../firebase/firestore.js";
 
 export default function BlogPost() {
   const { id } = useParams();

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import toast from "react-hot-toast";
-import { useAuth } from "../../context/Authcontext";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function AdminLogin() {
   const { user, login } = useAuth();

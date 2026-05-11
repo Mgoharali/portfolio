@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FolderKanban, FileText, Cpu, MessageSquare, ArrowRight, TrendingUp } from "lucide-react";
-import AdminLayout from "../../components/layout/AdminLayout";
-import { getProjects, getPosts, getSkills, getMessages } from "../../firebase/firestore";
+import AdminLayout from "../../components/layout/AdminLayout.jsx";
+import { getProjects, getPosts, getSkills, getMessages } from "../../firebase/firestore.js";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ projects: 0, posts: 0, skills: 0, messages: 0, unread: 0 });

@@ -1,6 +1,6 @@
 // src/components/layout/PageLayout.jsx
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "./Navbar.jsx";
+import Footer from "./Footer.jsx";
 
 export default function PageLayout({ children, className = "" }) {
   return (

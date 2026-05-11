@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
-import AdminLayout from "../../components/layout/AdminLayout";
-import { getSkills, addSkill, deleteSkill } from "../../firebase/firestore";
+import AdminLayout from "../../components/layout/AdminLayout.jsx";
+import { getSkills, addSkill, deleteSkill } from "../../firebase/firestore.js";
 
 const CATEGORIES = ["Frontend", "Backend", "Database", "DevOps", "Tools", "Languages", "Design", "Other"];
 

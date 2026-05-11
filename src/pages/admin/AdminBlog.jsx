@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, X, Save, ArrowLeft } from "lucide-react";
 import { format } from "date-fns";
 import toast from "react-hot-toast";
-import AdminLayout from "../../components/layout/AdminLayout";
-import { getPosts, addPost, updatePost, deletePost } from "../../firebase/firestore";
+import AdminLayout from "../../components/layout/AdminLayout.jsx";
+import { getPosts, addPost, updatePost, deletePost } from "../../firebase/firestore.js";
 
 const empty = { title: "", excerpt: "", content: "", tags: "", readTime: "5" };
 

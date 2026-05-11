@@ -3,26 +3,26 @@ import { lazy, Suspense, memo } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { useEffect } from 'react'
-import { AuthProvider, useAuth } from './context/AuthContext'
-import { ThemeProvider, useTheme } from './context/ThemeContext'
+import { AuthProvider, useAuth } from './context/AuthContext.jsx'
+import { ThemeProvider, useTheme } from './context/ThemeContext.jsx'
 
 // ── Public pages: eagerly loaded (small, user always sees these) ──
-import Home     from './pages/Home'
-import Projects from './pages/Projects'
-import Blog     from './pages/Blog'
-import Contact  from './pages/Contact'
+import Home     from './pages/Home.jsx'
+import Projects from './pages/Projects.jsx'
+import Blog     from './pages/Blog.jsx'
+import Contact  from './pages/Contact.jsx'
 
 // ── Heavy pages: lazily loaded (only downloaded when visited) ──
 // BlogPost loads react-markdown + remark-gfm (~45KB gzip) — defer it
-const BlogPost = lazy(() => import('./pages/BlogPost'))
+const BlogPost = lazy(() => import('./pages/BlogPost.jsx'))
 
 // Admin chunk: loads firebase/auth + MD editor (~120KB gzip) only when needed
-const AdminLogin    = lazy(() => import('./pages/admin/Login'))
-const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'))
-const AdminProjects = lazy(() => import('./pages/admin/AdminProjects'))
-const AdminBlog     = lazy(() => import('./pages/admin/AdminBlog'))
-const AdminSkills   = lazy(() => import('./pages/admin/AdminSkills'))
-const AdminMessages = lazy(() => import('./pages/admin/AdminMessages'))
+const AdminLogin    = lazy(() => import('./pages/admin/Login.jsx'))
+const AdminDashboard = lazy(() => import('./pages/admin/Dashboard.jsx'))
+const AdminProjects = lazy(() => import('./pages/admin/AdminProjects.jsx'))
+const AdminBlog     = lazy(() => import('./pages/admin/AdminBlog.jsx'))
+const AdminSkills   = lazy(() => import('./pages/admin/AdminSkills.jsx'))
+const AdminMessages = lazy(() => import('./pages/admin/AdminMessages.jsx'))
 
 // ── Minimal fallback — no spinner, no layout shift ──────────────
 function PageFallback() {

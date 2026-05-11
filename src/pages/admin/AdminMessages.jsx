@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { Mail, MailOpen, Clock } from "lucide-react";
 import { format } from "date-fns";
-import AdminLayout from "../../components/layout/AdminLayout";
-import { getMessages, markMessageRead } from "../../firebase/firestore";
+import AdminLayout from "../../components/layout/AdminLayout.jsx";
+import { getMessages, markMessageRead } from "../../firebase/firestore.js";
 
 export default function AdminMessages() {
   const [messages, setMessages] = useState([]);

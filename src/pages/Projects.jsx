@@ -1,8 +1,8 @@
 // src/pages/Projects.jsx
 import { useEffect, useState } from "react";
 import { Github, ExternalLink, Search } from "lucide-react";
-import PageLayout from "../components/layout/PageLayout";
-import { getProjects } from "../firebase/firestore";
+import PageLayout from "../components/layout/PageLayout.jsx";
+import { getProjects } from "../firebase/firestore.js";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
