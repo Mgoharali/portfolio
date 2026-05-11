@@ -42,6 +42,7 @@ export default defineConfig({
       '@pages':       '/src/pages',
       '@hooks':       '/src/hooks',
       '@utils':       '/src/utils',
+      '@firebase':    '/src/firebase',
       '@context':     '/src/context',
     },
   },
