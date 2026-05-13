@@ -6,10 +6,11 @@ import { Github, Linkedin, Twitter, Mail } from 'lucide-react'
 const SOCIAL_LINKS = [
   { icon: Github,   href: 'https://github.com/Mgoharali',            label: 'GitHub'   },
   { icon: Linkedin, href: 'https://www.linkedin.com/in/gohar-ali-336834334/',          label: 'LinkedIn' },
-  { icon: Mail,     href: 'm.gohar.dev@gmail.com',     label: 'Email'    },
+  { icon: Mail,     href: 'https://mail.google.com/mail/u/0/?fs=1&to=m.gohar.dev@gmail.com&tf=cm',     label: 'Email'    },
 ]
 
 const Footer = memo(function Footer() {
+
   return (
     <footer className="border-t border-[var(--border)] mt-24">
       <div className="max-w-6xl mx-auto px-6 sm:px-8 py-10 sm:py-12">
@@ -29,7 +30,7 @@ const Footer = memo(function Footer() {
               <a
                 key={label}
                 href={href}
-                target={href.startsWith('mailto') ? undefined : '_blank'}
+                target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
                 className="w-9 h-9 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--gold-dim)] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:outline-none"
