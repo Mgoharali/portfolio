@@ -29,7 +29,7 @@
 
   --text:         #e2e8f0;
   --subtle:       #94a3b8;
-  --muted:        #4a4a6a;
+  --muted:        #7979c0;
 
   --shadow-sm:    0 2px 8px rgba(0,0,0,0.4);
   --shadow-md:    0 8px 32px rgba(0,0,0,0.5);
@@ -244,6 +244,7 @@ body::before {
 ═══════════════════════════════════════════════════════════════ */
 
 .input-field {
+  min-width: 0;
   width: 100%;
   padding: 0.85rem 1.1rem;
   border-radius: 10px;

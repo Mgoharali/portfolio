@@ -6,7 +6,7 @@ export default function PageLayout({ children, className = "" }) {
   return (
     <div className="min-h-screen mesh-bg">
       <Navbar />
-      <main className={`pt-20 sm:pt-24 ${className}`}>
+      <main className={`pt-14 sm:pt-16 ${className}`}>
         {children}
       </main>
       <Footer />

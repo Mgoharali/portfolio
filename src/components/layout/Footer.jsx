@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom'
 import { Github, Linkedin, Twitter, Mail } from 'lucide-react'
 
 const SOCIAL_LINKS = [
-  { icon: Github,   href: 'https://github.com',            label: 'GitHub'   },
-  { icon: Linkedin, href: 'https://linkedin.com',          label: 'LinkedIn' },
-  { icon: Twitter,  href: 'https://twitter.com',           label: 'Twitter'  },
-  { icon: Mail,     href: 'mailto:goharali@email.com',     label: 'Email'    },
+  { icon: Github,   href: 'https://github.com/Mgoharali',            label: 'GitHub'   },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/gohar-ali-336834334/',          label: 'LinkedIn' },
+  { icon: Mail,     href: 'm.gohar.dev@gmail.com',     label: 'Email'    },
 ]
 
 const Footer = memo(function Footer() {

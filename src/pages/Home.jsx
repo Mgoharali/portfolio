@@ -7,10 +7,10 @@ import {
   Github as GithubIcon, Code2, Layers, Smartphone, Palette,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import PageLayout from "../components/layout/PageLayout.jsx";
-import { getProjects, getSkills, addMessage } from "../firebase/firestore.js";
-import { sanitizeForm, validateContactForm, checkRateLimit } from "../utils/sanitize.js";
-import { useReveal } from "../hooks/useScrollReveal.js";
+import PageLayout from "../components/layout/PageLayout";
+import { getProjects, getSkills, addMessage } from "../firebase/firestore";
+import { sanitizeForm, validateContactForm, checkRateLimit } from "../utils/sanitize";
+import { useReveal } from "../hooks/useScrollReveal";
 
 // ─── YOUR INFO ────────────────────────────────────────────────
 const PROFILE = {
@@ -18,11 +18,14 @@ const PROFILE = {
   role:      "Full Stack Developer",
   bio:       "I craft elegant, fast, and thoughtful digital products — from first concept to live deployment. Clean code, beautiful interfaces, real results.",
   location:  "Pakistan",
-  email:     "muhammadgoharali514@gmail.com",
+  email:     "m.gohar.dev@email.com",
   available: true,
-  github:    "https://github.com",
-  linkedin:  "https://linkedin.com",
+  github:    "https://github.com/Mgoharali",
+  linkedin:  "https://www.linkedin.com/in/gohar-ali-336834334/",
   twitter:   "https://twitter.com",
+  // ↓ Add your photo: place it in /public/profile.jpg and set path here
+  // Leave as "" to show the monogram initials fallback instead
+  image:     "../public/imageP.png",
 };
 
 const SERVICES = [
@@ -93,17 +96,17 @@ export default function Home() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
           <div
             className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.035] blur-[120px] rounded-full"
-            style={{ background: "radial-gradient(circle, #c9a96e 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(circle, var(--accent) 0%, transparent 70%)" }}
           />
           <div
             className="absolute bottom-0 left-[-100px] w-[500px] h-[500px] opacity-[0.025] blur-[100px] rounded-full"
-            style={{ background: "radial-gradient(circle, #d4836a 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(circle, var(--accent2) 0%, transparent 70%)" }}
           />
           {/* Thin horizontal rule for editorial feel */}
           <div className="absolute top-1/2 left-0 right-0 h-px bg-[var(--border)] opacity-30" />
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 w-full py-32" ref={heroRef}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 w-full py-14 sm:py-20" ref={heroRef}>
           <div className="grid lg:grid-cols-12 gap-12 items-center">
 
             {/* Left — main headline */}
@@ -152,71 +155,126 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right — identity card */}
-            <div className="reveal-item lg:col-span-5 flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-sm">
-                {/* Decorative corner lines */}
-                <div className="absolute -top-3 -left-3 w-12 h-12 border-t border-l border-[var(--gold-dim)]" />
-                <div className="absolute -bottom-3 -right-3 w-12 h-12 border-b border-r border-[var(--gold-dim)]" />
+            {/* Right — large circular photo, card pushed below with generous gap */}
+            <div className="reveal-item lg:col-span-5 flex flex-col items-center w-full">
+              <div className="relative w-full max-w-[360px] mx-auto">
 
-                <div className="card p-8 space-y-6">
-                  {/* Avatar placeholder */}
-                  <div className="flex items-center gap-4">
+                {/* ── Large circular profile image ── */}
+                <div className="flex justify-center relative z-10">
+                  <div className="relative">
+                    {/* Ambient glow behind circle */}
                     <div
-                      className="w-14 h-14 rounded-xl flex items-center justify-center border border-[var(--gold-dim)] shrink-0"
-                      style={{ background: "var(--accent-soft)" }}
+                      className="absolute rounded-full opacity-25 blur-2xl"
+                      style={{
+                        inset: "-24px",
+                        background: "radial-gradient(circle, var(--accent) 0%, var(--accent2) 100%)",
+                      }}
+                    />
+                    {/* Gradient ring border — 4px thick */}
+                    <div
+                      className="relative rounded-full p-[4px]"
+                      style={{
+                        width: "240px", height: "240px",
+                        background: "linear-gradient(145deg, var(--accent), var(--accent2))",
+                      }}
                     >
-                      <span className="font-display font-bold text-xl text-[var(--accent)]" style={{ fontStyle: "italic" }}>
-                        {PROFILE.name.split(" ").map(w => w[0]).join("")}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="font-display font-medium text-[var(--text)] text-base">{PROFILE.name}</p>
-                      <p className="text-[var(--subtle)] text-xs font-mono tracking-wide mt-0.5">{PROFILE.role}</p>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-[var(--border)]" />
-
-                  {/* Info rows */}
-                  <div className="space-y-3.5">
-                    {[
-                      { label: "Location", value: PROFILE.location, icon: MapPin },
-                      { label: "Status",   value: PROFILE.available ? "Available for hire" : "Not available", icon: null },
-                      { label: "Email",    value: PROFILE.email, icon: Mail },
-                    ].map(({ label, value, icon: Icon }) => (
-                      <div key={label} className="flex items-center justify-between gap-2">
-                        <span className="text-[var(--subtle)] text-xs font-mono uppercase tracking-wider">{label}</span>
-                        <span className="flex items-center gap-1.5 text-[var(--subtle)] text-sm font-light text-right">
-                          {Icon && <Icon size={11} className="text-[var(--gold-dim)] shrink-0" />}
-                          {label === "Status" && PROFILE.available && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                      {/* Inner white gap ring for depth */}
+                      <div className="w-full h-full rounded-full p-[3px] bg-[var(--bg)]">
+                        <div className="w-full h-full rounded-full overflow-hidden bg-[var(--surface-2)]">
+                          {PROFILE.image ? (
+                            <img
+                              src={PROFILE.image}
+                              alt={`${PROFILE.name} — ${PROFILE.role}`}
+                              className="w-full h-full object-cover object-top"
+                              loading="eager"
+                              decoding="async"
+                              width={180}
+                              height={180}
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-[var(--accent-soft)]">
+                              <span
+                                className="font-display font-bold text-[3.5rem] text-[var(--accent)]"
+                                style={{ fontStyle: "italic" }}
+                              >
+                                {PROFILE.name.split(" ").map(w => w[0]).join("")}
+                              </span>
+                            </div>
                           )}
-                          {value}
-                        </span>
+                        </div>
                       </div>
-                    ))}
-                  </div>
-
-                  <div className="h-px bg-[var(--border)]" />
-
-                  {/* Social */}
-                  <div className="flex items-center gap-2">
-                    {[
-                      { icon: GithubIcon, href: PROFILE.github,   label: "GitHub"   },
-                      { icon: Linkedin,   href: PROFILE.linkedin, label: "LinkedIn" },
-                      { icon: Twitter,    href: PROFILE.twitter,  label: "Twitter"  },
-                    ].map(({ icon: Icon, href, label }) => (
-                      <a
-                        key={label} href={href} target="_blank"
-                        rel="noopener noreferrer" aria-label={label}
-                        className="w-9 h-9 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--gold-dim)] hover:bg-[var(--accent-soft)] transition-all duration-200"
-                      >
-                        <Icon size={14} />
-                      </a>
-                    ))}
+                    </div>
                   </div>
                 </div>
+
+                {/* ── Gap between image and card ── */}
+                <div className="h-10" />
+
+                {/* ── Info card — sits clearly below the image ── */}
+                <div className="relative">
+                  {/* Decorative corner accents */}
+                  <div className="absolute -top-2 -left-2 w-8 h-8 border-t border-l border-[var(--gold-dim)]" />
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b border-r border-[var(--gold-dim)]" />
+
+                  <div className="card p-6 space-y-4">
+                    {/* Name + role centred */}
+                    <div className="text-center">
+                      <p className="font-display font-medium text-[var(--text)] text-xl leading-tight">
+                        {PROFILE.name}
+                      </p>
+                      <p className="text-[var(--muted)] text-xs font-mono tracking-widest mt-1 uppercase">
+                        {PROFILE.role}
+                      </p>
+                    </div>
+
+                    <div className="h-px bg-[var(--border)]" />
+
+                    {/* Info rows */}
+                    <div className="space-y-3">
+                      {[
+                        { label: "Location", value: PROFILE.location, icon: MapPin, dot: false },
+                        { label: "Status",
+                          value: PROFILE.available ? "Available for hire" : "Unavailable",
+                          icon: null, dot: PROFILE.available },
+                        { label: "Email", value: PROFILE.email, icon: Mail, dot: false },
+                      ].map(({ label, value, icon: Icon, dot }) => (
+                        <div key={label} className="flex flex-col gap-0.5 min-w-0">
+                          <span className="text-[var(--subtle)] text-[0.65rem] font-mono uppercase tracking-wider">
+                            {label}
+                          </span>
+                          <span className="flex items-center gap-1.5 text-[var(--text)] text-sm font-light min-w-0">
+                            {dot && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />}
+                            {Icon && <Icon size={11} className="text-[var(--gold-dim)] shrink-0" />}
+                            <span className="break-all leading-snug">{value}</span>
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="h-px bg-[var(--border)]" />
+
+                    {/* Social icons */}
+                    <div className="flex items-center justify-center gap-2">
+                      {[
+                        { icon: GithubIcon, href: PROFILE.github,   label: "GitHub"   },
+                        { icon: Linkedin,   href: PROFILE.linkedin, label: "LinkedIn" },
+                      ].map(({ icon: Icon, href, label }) => (
+                        <a key={label} href={href} target="_blank"
+                          rel="noopener noreferrer" aria-label={label}
+                          className="w-9 h-9 rounded-lg border border-[var(--border)]
+                            flex items-center justify-center text-[var(--muted)]
+                            hover:text-[var(--accent)] hover:border-[var(--gold-dim)]
+                            hover:bg-[var(--accent-soft)] transition-all duration-200
+                            focus-visible:ring-2 focus-visible:ring-[var(--accent)]
+                            focus-visible:outline-none"
+                        >
+                          <Icon size={14} />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -226,8 +284,8 @@ export default function Home() {
       {/* ════════════════════════════════════════
           ABOUT
       ════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-28">
-        <div ref={aboutRef} className="grid lg:grid-cols-12 gap-16 items-start">
+      <section className="max-w-6xl mx-auto px-6 sm:px-8 pt-10 pb-5 sm:pt-12 sm:pb-6">
+        <div ref={aboutRef} className="grid lg:grid-cols-12 gap-10 items-start">
 
           {/* Left label column */}
           <div className="reveal-item lg:col-span-4">
@@ -244,7 +302,7 @@ export default function Home() {
 
           {/* Right content */}
           <div className="lg:col-span-8 space-y-8">
-            <div className="reveal-item space-y-5 text-[var(--subtle)] leading-relaxed font-light text-base">
+            <div className="reveal-item space-y-5 text-[var(--text)] opacity-75 leading-relaxed font-light text-base">
               <p>
                 I&apos;m <strong className="text-[var(--text)] font-medium">{PROFILE.name}</strong>, a Full Stack
                 Developer based in {PROFILE.location}. I specialize in building modern web applications —
@@ -270,9 +328,15 @@ export default function Home() {
                 { label: "Email",    value: PROFILE.email    },
                 { label: "Style",    value: "Clean & Fast"   },
               ].map(({ label, value }) => (
-                <div key={label} className="py-4 px-5 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--gold-dim)] transition-colors duration-250">
-                  <p className="text-[var(--subtle)] text-xs font-mono uppercase tracking-wider mb-1.5">{label}</p>
-                  <p className="text-[var(--text)] text-sm font-light break-words">{value}</p>
+                <div key={label}
+                  className="py-4 px-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--gold-dim)] transition-colors duration-200 min-w-0 overflow-hidden">
+                  <p className="text-[var(--muted)] text-xs font-mono uppercase tracking-wider mb-1.5 truncate">
+                    {label}
+                  </p>
+                  {/* break-all so long emails wrap on any screen width */}
+                  <p className="text-[var(--text)] text-sm font-light break-all leading-snug">
+                    {value}
+                  </p>
                 </div>
               ))}
             </div>
@@ -295,10 +359,10 @@ export default function Home() {
       {/* ════════════════════════════════════════
           SERVICES
       ════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-20">
+      <section className="max-w-6xl mx-auto px-6 sm:px-8 pt-5 pb-8 sm:pt-6 sm:pb-10">
         <div ref={servicesRef}>
 
-          <div className="reveal-item flex items-end justify-between mb-14 border-b border-[var(--border)] pb-8">
+          <div className="reveal-item flex items-end justify-between mb-6 border-b border-[var(--border)] pb-4">
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <span className="gold-line" />
@@ -308,7 +372,7 @@ export default function Home() {
                 What I <span style={{ fontStyle: "italic" }}>do</span>
               </h2>
             </div>
-            <span className="text-[var(--subtle)] font-mono text-xs hidden sm:block">— 04 services</span>
+            <span className="text-[var(--muted)] font-mono text-xs hidden sm:block">— 04 services</span>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-5">
@@ -324,18 +388,18 @@ export default function Home() {
                     <div className="w-11 h-11 rounded-xl bg-[var(--accent-soft)] border border-[var(--gold-dim)] flex items-center justify-center group-hover:bg-[var(--accent)] transition-colors duration-300">
                       <Icon size={20} className="text-[var(--accent)] group-hover:text-[#0f0e0c] transition-colors duration-300" />
                     </div>
-                    <span className="font-mono text-xs text-[var(--subtle)] tracking-wider">{svc.num}</span>
+                    <span className="font-mono text-xs text-[var(--muted)] tracking-wider">{svc.num}</span>
                   </div>
                   <div>
                     <h3 className="font-display font-medium text-[var(--text)] text-xl mb-2.5 group-hover:text-[var(--accent)] transition-colors duration-200">
                       {svc.title}
                     </h3>
-                    <p className="text-[var(--subtle)] text-sm leading-relaxed font-light">{svc.desc}</p>
+                    <p className="text-[var(--text)] opacity-70 text-sm leading-relaxed font-light">{svc.desc}</p>
                   </div>
                   <ul className="space-y-2 mt-auto pt-5 border-t border-[var(--border)]">
                     {svc.items.map(item => (
-                      <li key={item} className="flex items-center gap-2.5 text-sm text-[var(--subtle)]">                        
-                        <span className="w-1 h-1 rounded-full bg-[var(--gold-dim)] shrink-0" />
+                      <li key={item} className="flex items-center gap-2.5 text-sm text-[var(--subtle)]">
+                        <span className="w-1 h-1 rounded-full bg-[var(--accent)] opacity-60 shrink-0" />
                         {item}
                       </li>
                     ))}
@@ -350,7 +414,7 @@ export default function Home() {
       {/* ════════════════════════════════════════
           SKILLS
       ════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-20">
+      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-10 sm:py-12">
         <div className="flex items-center gap-3 mb-4">
           <span className="gold-line" />
           <span className="text-[var(--accent)] text-xs font-mono tracking-[0.15em] uppercase">Tech Stack</span>
@@ -364,14 +428,14 @@ export default function Home() {
         {!loading && !fetchError && (
           <div className="flex flex-wrap gap-2.5">
             {skills.length === 0
-              ? <p className="text-[var(--subtle)] text-sm font-mono">No skills added yet — add via Admin panel.</p>
+              ? <p className="text-[var(--muted)] text-sm font-mono">No skills added yet — add via Admin panel.</p>
               : skills.map((skill, i) => (
                   <div
                     key={skill.id || i}
-                    className="px-4 py-2 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--subtle)] text-sm font-light hover:border-[var(--gold-dim)] hover:text-[var(--accent)] hover:bg-[var(--accent-soft)] transition-all duration-200 cursor-default"
+                    className="px-4 py-2 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--text)] text-sm font-light hover:border-[var(--gold-dim)] hover:text-[var(--accent)] hover:bg-[var(--accent-soft)] transition-all duration-200 cursor-default"
                   >
                     {skill.category
-                      ? <span className="text-[var(--subtle)] text-xs font-mono mr-2">{skill.category}</span>
+                      ? <span className="text-[var(--muted)] text-xs font-mono mr-2">{skill.category}</span>
                       : null}
                     {skill.name || ""}
                   </div>
@@ -384,8 +448,8 @@ export default function Home() {
       {/* ════════════════════════════════════════
           PROJECTS
       ════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-20">
-        <div className="flex items-end justify-between mb-14 border-b border-[var(--border)] pb-8">
+      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-10 sm:py-12">
+        <div className="flex items-end justify-between mb-8 border-b border-[var(--border)] pb-6">
           <div>
             <div className="flex items-center gap-3 mb-3">
               <span className="gold-line" />
@@ -409,7 +473,7 @@ export default function Home() {
         {!loading && !fetchError && (
           <div>
             {projects.length === 0
-              ? <p className="text-[var(--subtle)] text-sm font-mono">No projects yet — add via Admin panel.</p>
+              ? <p className="text-[var(--muted)] text-sm font-mono">No projects yet — add via Admin panel.</p>
               : <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {projects.map((project, i) => (
                     <ProjectCard key={project.id || i} project={project} />
@@ -423,7 +487,7 @@ export default function Home() {
       {/* ════════════════════════════════════════
           CONTACT
       ════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-24 pb-32">
+      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-10 sm:py-12 pb-14">
         <div ref={contactRef} className="reveal-item">
           {/* Section header */}
           <div className="grid lg:grid-cols-12 gap-12 mb-16">
@@ -633,11 +697,11 @@ function ContactForm() {
           <h3 className="font-display font-medium text-2xl text-[var(--text)] mb-2">
             Send a message
           </h3>
-          <p className="text-[var(--subtle)] text-sm">
+          <p className="text-[var(--muted)] text-sm font-light">
             Fill in the form and I&apos;ll get back to you as soon as possible.
           </p>
         </div>
-        <div className="hidden sm:block text-[var(--subtle)] font-mono text-xs space-y-1">
+        <div className="hidden sm:block text-[var(--muted)] font-mono text-xs space-y-1">
           <p>✦ Usually replies within 24h</p>
           <p>✦ Open to all project types</p>
         </div>
@@ -645,15 +709,15 @@ function ContactForm() {
 
       {/* Right — form fields */}
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4">
           <Field id="f-name" label="Name *" error={errors.name}>
             <input id="f-name" type="text" name="name" value={form.name}
-              onChange={handleChange} placeholder="John Doe" autoComplete="name"
+              onChange={handleChange} placeholder="Your Name" autoComplete="name"
               className={`input-field ${errors.name ? "border-red-400/60" : ""}`} />
           </Field>
           <Field id="f-email" label="Email *" error={errors.email}>
             <input id="f-email" type="email" name="email" value={form.email}
-              onChange={handleChange} placeholder="john@example.com" autoComplete="email"
+              onChange={handleChange} placeholder="Enter Email" autoComplete="email"
               className={`input-field ${errors.email ? "border-red-400/60" : ""}`} />
           </Field>
         </div>
@@ -684,8 +748,8 @@ function ContactForm() {
 
 function Field({ id, label, error, children }) {
   return (
-    <div>
-      <label htmlFor={id} className="block text-[var(--subtle)] text-xs font-mono uppercase tracking-wider mb-2">
+    <div className="min-w-0">
+      <label htmlFor={id} className="block text-[var(--muted)] text-xs font-mono uppercase tracking-wider mb-2">
         {label}
       </label>
       {children}

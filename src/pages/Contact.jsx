@@ -174,7 +174,7 @@ export default function Contact() {
 // Pure field wrapper component
 const Field = memo(function Field({ label, htmlFor, error, children }) {
   return (
-    <div>
+    <div className="min-w-0">
       <label htmlFor={htmlFor}
         className="block text-[var(--subtle)] text-xs font-mono uppercase tracking-widest mb-2">
         {label}
