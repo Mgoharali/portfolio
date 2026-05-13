@@ -25,7 +25,7 @@ const PROFILE = {
   twitter:   "https://twitter.com",
   // ↓ Add your photo: place it in /public/profile.jpg and set path here
   // Leave as "" to show the monogram initials fallback instead
-  image:     "../public/imageP.png",
+  image:     "/imageP.png",
 };
 
 const SERVICES = [
